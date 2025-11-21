@@ -16,11 +16,16 @@ void blinky_task(void *pvParameters)
     {
         // ------ onboarding task part 0.5 ------
         // toggle green led on/off each time this loop runs (which is connected to gpio PE10)
+        vTaskDelay(pdMS_TO_TICKS(20));
+        HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_11);
+        vTaskDelay(pdMS_TO_TICKS(10));
         HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_10);
-        // delay for 500 ms
-        vTaskDelay(pdMS_TO_TICKS(500));
-        // --------------------------------------
 
+        // delay for 500 ms
+        vTaskDelay(pdMS_TO_TICKS(200));
+        // --------------------------------------
+         HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_9);
+         vTaskDelay(pdMS_TO_TICKS(100));
         // ------ onboarding task part 1 ------
         // check LSM6DSO is alive
         w_status_t status = lsm6dso_check_sanity();
