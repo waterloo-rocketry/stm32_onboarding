@@ -16,9 +16,17 @@ void blinky_task(void *pvParameters)
     {
         // ------ onboarding task part 0.5 ------
         // toggle green led on/off each time this loop runs (which is connected to gpio PE10)
+        HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_9);
+        // delay for 500 ms
+        vTaskDelay(pdMS_TO_TICKS(1000));
+
         HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_10);
         // delay for 500 ms
-        vTaskDelay(pdMS_TO_TICKS(500));
+        vTaskDelay(pdMS_TO_TICKS(1000));
+
+        HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_11);
+        // delay for 500 ms
+        vTaskDelay(pdMS_TO_TICKS(1000));
         // --------------------------------------
 
         // ------ onboarding task part 1 ------
