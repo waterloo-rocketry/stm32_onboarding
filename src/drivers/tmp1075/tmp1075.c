@@ -33,7 +33,7 @@ w_status_t tmp1075_get_temperature(float *temperature_c) {
 
 	// Read 2 bytes from the temperature register
 	if (HAL_I2C_Mem_Read(&hi2c1,
-						 I2C_DEV_ADDR,
+						 I2C_DEV_ADDR << 1U, // Shift 7-bit addr to be 8-bit for HAL
 						 REG_TEMP,
 						 I2C_MEMADD_SIZE_8BIT,
 						 raw_data,

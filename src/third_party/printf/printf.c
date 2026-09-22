@@ -264,7 +264,7 @@ typedef union
     double F;
 } double_with_bit_access;
 
-extern UART_HandleTypeDef huart4;
+extern UART_HandleTypeDef huart1;
 
 // This is unnecessary in C99, since compound initializers can be used,
 // but:
@@ -1596,6 +1596,6 @@ int fctprintf(void (*out)(char c, void *extra_arg), void *extra_arg, const char 
 void putchar_(char c)
 {
 #ifdef DEBUG
-    HAL_UART_Transmit(&huart4, (uint8_t *)&c, 1, 50);
+    HAL_UART_Transmit(&huart1, (uint8_t *)&c, 1, 50);
 #endif
 }
