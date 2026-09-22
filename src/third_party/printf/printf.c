@@ -45,7 +45,7 @@
 
 #include "third_party/printf/printf.h"
 
-#include "stm32h7xx_hal.h"
+#include "stm32c0xx_hal.h"
 
 #ifdef __cplusplus
 #include <cstdint>

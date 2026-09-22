@@ -1,12 +1,12 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    stm32h7xx_it.h
+  * @file    stm32c0xx_it.h
   * @brief   This file contains the headers of the interrupt handlers.
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2025 STMicroelectronics.
+  * Copyright (c) 2026 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -18,8 +18,8 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM32H7xx_IT_H
-#define __STM32H7xx_IT_H
+#ifndef __STM32C0xx_IT_H
+#define __STM32C0xx_IT_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -48,24 +48,10 @@ extern "C" {
 /* Exported functions prototypes ---------------------------------------------*/
 void NMI_Handler(void);
 void HardFault_Handler(void);
-void MemManage_Handler(void);
-void BusFault_Handler(void);
-void UsageFault_Handler(void);
-void DebugMon_Handler(void);
-void DMA1_Stream0_IRQHandler(void);
-void DMA1_Stream1_IRQHandler(void);
-void ADC_IRQHandler(void);
-void FDCAN1_IT0_IRQHandler(void);
-void I2C2_EV_IRQHandler(void);
-void I2C2_ER_IRQHandler(void);
-void SDMMC1_IRQHandler(void);
-void UART4_IRQHandler(void);
-void TIM6_DAC_IRQHandler(void);
-void UART8_IRQHandler(void);
-void I2C4_EV_IRQHandler(void);
-void I2C4_ER_IRQHandler(void);
-void FMAC_IRQHandler(void);
-void CORDIC_IRQHandler(void);
+void SVC_Handler(void);
+void PendSV_Handler(void);
+void SysTick_Handler(void);
+void TIM1_BRK_UP_TRG_COM_IRQHandler(void);
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */
@@ -74,4 +60,4 @@ void CORDIC_IRQHandler(void);
 }
 #endif
 
-#endif /* __STM32H7xx_IT_H */
+#endif /* __STM32C0xx_IT_H */
