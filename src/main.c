@@ -105,23 +105,29 @@ int main(void) {
 		// TODO: add a 500ms delay 
 
 
+
+
+
+
+
+
 		// ------ end tutorial part 0.5 -----
 
 		// ------ tutorial part 1 ------
 		// Read the temperature from the TMP1075 sensor
-		float temperature_c;
-		if (tmp1075_get_temperature(&temperature_c) == W_SUCCESS) {
-			// TODO: ...
-		}
+		// float temperature_c;
+		// if (tmp1075_get_temperature(&temperature_c) == W_SUCCESS) {
+		// 	// TODO: ...
+		// }
 
 		// Read the voltage at the potentiometer
-		float pot_voltage;
-		if (potentiometer_get_voltage(&pot_voltage) == W_SUCCESS) {
-			// TODO: ...
-		}
+		// float pot_voltage;
+		// if (potentiometer_get_voltage(&pot_voltage) == W_SUCCESS) {
+		// 	// TODO: ...
+		// }
 
 		// Read the push button state (connected to pin A8)
-		GPIO_PinState button_state = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8);
+		// GPIO_PinState button_state = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8);
 
 		// ----- end tutorial part 1 -----
 
