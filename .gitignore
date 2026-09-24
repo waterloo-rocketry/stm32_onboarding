@@ -6,3 +6,4 @@
 .mxproject
 .settings
 scripts/clang-format*
+.metadata/**
