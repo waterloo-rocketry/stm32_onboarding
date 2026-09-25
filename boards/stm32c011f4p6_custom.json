@@ -1,0 +1,35 @@
+{
+  "build": {
+    "core": "stm32",
+    "cpu": "cortex-m0plus",
+    "extra_flags": "-DSTM32C0 -DSTM32C011xx",
+    "f_cpu": "48000000L",
+    "mcu": "stm32c011f4p6",
+    "product_line": "STM32C011xx",
+    "variant": "STM32C0xx/C011D6Y_C011F(4-6)(P-U)"
+  },
+  "debug": {
+    "default_tools": [
+      "stlink"
+    ],
+    "jlink_device": "STM32C011F4",
+    "openocd_target": "stm32c0x",
+    "svd_path": "STM32C011.svd"
+  },
+  "frameworks": [
+    "stm32cube"
+  ],
+  "name": "Custom STM32C011F4P6",
+  "upload": {
+    "maximum_ram_size": 6144,
+    "maximum_size": 16384,
+    "protocol": "stlink",
+    "protocols": [
+      "jlink",
+      "cmsis-dap",
+      "stlink"
+    ]
+  },
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32c0x1.html",
+  "vendor": "Custom"
+}
