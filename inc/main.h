@@ -67,8 +67,6 @@ void Error_Handler(void);
 #define MCU_RX_GPIO_Port GPIOA
 #define LED_RED_Pin GPIO_PIN_2
 #define LED_RED_GPIO_Port GPIOA
-#define LED_GREEN_Pin GPIO_PIN_3
-#define LED_GREEN_GPIO_Port GPIOA
 #define LED_BLUE_Pin GPIO_PIN_4
 #define LED_BLUE_GPIO_Port GPIOA
 #define POT_ADC_Pin GPIO_PIN_6
