@@ -104,7 +104,9 @@ int main(void) {
 		// toggle the green led (connected to pin A3) on/off
 		// TODO: add a 500ms delay 
 
+		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
 
+		HAL_Delay(500);
 
 
 
