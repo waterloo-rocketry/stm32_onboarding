@@ -100,13 +100,30 @@ int main(void) {
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 
+	int time_constant = 5;
+	float adjustment = 1;
+	int counter = 0;
+
 	while (1) {
 		// ------ tutorial part 0.5 ------
 		// toggle the green led (connected to pin A3) on/off
 		// TODO: add a 500ms delay 
 
+		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3); //toggle off
+		HAL_Delay(time_constant * (adjustment));
+
 		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
-		HAL_Delay(500);
+		HAL_Delay(time_constant * (1 - adjustment)); //toggle on
+
+		if (counter == 10){
+			if (adjustment > 0){
+				adjustment = adjustment - 0.01;
+			} else {
+				adjustment = 1;
+			}
+			counter = 0;
+		}
+		counter = counter + 1;
 
 
 		// ------ end tutorial part 0.5 -----
