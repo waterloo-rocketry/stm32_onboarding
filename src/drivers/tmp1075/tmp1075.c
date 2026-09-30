@@ -4,16 +4,16 @@
 #include "stm32c0xx_hal.h"
 
 // Register map
-#define REG_TEMP 0x00U
+#define REG_TEMP 0xFF // TODO: find the correct address
 #define REG_CONFIG 0x01U
 #define REG_T_LOW 0x02U
 #define REG_T_HIGH 0x03U
 
-// Datasheet Table 7-2: A2=0, A1=0, A0=0 -> device address=0b1001000 (0x48)
-static const uint16_t I2C_DEV_ADDR = 0x48U;
+// The pins are set to A2=0, A1=0, A0=0
+static const uint16_t I2C_DEV_ADDR = 0x00U; // TODO: find the correct I2C address
 
-// Datasheet 6.5: 1 LSB from the raw 12-bit reading = 0.0625°C
-static const float CELSIUS_PER_LSB = 0.0625f;
+// TODO: find the correct conversion factor for temperture
+static const float CELSIUS_PER_LSB = 0.0;
 
 // The TMP1075 is connected to I2C1 on the mcu
 extern I2C_HandleTypeDef hi2c1;
