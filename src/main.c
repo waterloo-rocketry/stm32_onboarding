@@ -102,8 +102,8 @@ int main(void) {
 	while (1) {
 		// ------ tutorial part 0.5 ------
 		// toggle the green led (connected to pin A3) on/off
-		// TODO: add a 500ms delay 
-
+		// TODO: add a 500ms delay
+		HAL_Delay(500);
 
 
 
@@ -115,19 +115,21 @@ int main(void) {
 
 		// ------ tutorial part 1 ------
 		// Read the temperature from the TMP1075 sensor
-		// float temperature_c;
-		// if (tmp1075_get_temperature(&temperature_c) == W_SUCCESS) {
-		// 	// TODO: ...
-		// }
+		float temperature_c;
+		if (tmp1075_get_temperature(&temperature_c) == W_SUCCESS) {
+			// TODO: ...
+		}
 
 		// Read the voltage at the potentiometer
-		// float pot_voltage;
-		// if (potentiometer_get_voltage(&pot_voltage) == W_SUCCESS) {
-		// 	// TODO: ...
-		// }
+		float pot_voltage;
+		if (potentiometer_get_voltage(&pot_voltage) == W_SUCCESS) {
+			// TODO: ...
+		}
 
 		// Read the push button state (connected to pin A8)
-		// GPIO_PinState button_state = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8);
+		GPIO_PinState button_state = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8);
+
+		// TODO: have the LED turn on when the butten is pressed and turn it off when released
 
 		// ----- end tutorial part 1 -----
 

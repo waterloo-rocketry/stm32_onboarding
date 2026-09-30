@@ -2,10 +2,11 @@
 
 #include "main.h"
 
-// The board has 3.3V reference voltage for the mcu
-static const float ADC_MAX_VOLTAGE = 3.3f;
-// stm32c0 has a 12-bit ADC
-static const uint32_t ADC_MAX_COUNTS = 0xFFF;
+
+// TODO: find the correct values for this adc
+static const float ADC_MAX_VOLTAGE = 0x00; 
+
+static const uint32_t ADC_MAX_COUNTS = 0x00;
 
 extern ADC_HandleTypeDef hadc1;
 
@@ -42,7 +43,8 @@ w_status_t potentiometer_get_voltage(float *voltage) {
 
 	// Convert the raw ADC counts value to voltage. Interpret the adc counts reading as a proportion
 	// of the maximum counts, then scale to the max voltage.
-	*voltage = ((float)adc_counts / (float)ADC_MAX_COUNTS) * ADC_MAX_VOLTAGE;
+	// TODO: consider how to use ADC to get the correct voltage
+	*voltage = ((float)adc_counts / (float)ADC_MAX_COUNTS) * ADC_MAX_VOLTAGE; 
 
 	return W_SUCCESS;
 }
