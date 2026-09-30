@@ -103,10 +103,13 @@ int main(void) {
 	while (1) {
 		// ------ tutorial part 0.5 ------
 		// toggle the green led (connected to pin A3) on/off
-		// TODO: add a 500ms delay 
-
-		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
+		// TODO: add a 500ms delay
 		HAL_Delay(500);
+
+
+
+
+
 
 
 		// ------ end tutorial part 0.5 -----
@@ -117,8 +120,6 @@ int main(void) {
 		if (tmp1075_get_temperature(&temperature_c) == W_SUCCESS) {
 			// TODO: ...
 		}
-
-
 
 		// Read the voltage at the potentiometer
 		float pot_voltage;
