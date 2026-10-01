@@ -1,3 +1,5 @@
+cd | pwd
+cd ..
 rm -r Drivers
 rm -r Middlewares
 rm -r ThreadSafe
