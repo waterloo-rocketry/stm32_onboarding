@@ -101,9 +101,21 @@ int main(void) {
 	/* USER CODE BEGIN WHILE */
 	while (1) {
 		// ------ tutorial part 0.5 ------
-		// toggle the green led (connected to pin A3) on/off
-		// TODO: add a 500ms delay
-		HAL_Delay(500);
+		// Set the LED brightness from 0% to 100%.
+		uint32_t duty_cycle = 5;
+		const uint32_t pwm_period_ms = 20;
+		uint32_t on_time_ms = (pwm_period_ms * duty_cycle) / 100;
+
+		// The board LED is active-low: RESET turns it on, SET turns it off.
+		HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, GPIO_PIN_RESET);
+		HAL_Delay(on_time_ms);
+		HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, GPIO_PIN_SET);
+		HAL_Delay(pwm_period_ms - on_time_ms);
+
+
+
+
+
 
 
 
