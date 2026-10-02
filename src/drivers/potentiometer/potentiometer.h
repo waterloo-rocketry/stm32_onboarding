@@ -12,6 +12,8 @@ w_status_t potentiometer_init(void);
  * @param voltage_v Pointer to store the measured voltage in volts.
  * @return W_SUCCESS if the voltage was read successfully, W_FAILURE otherwise.
  */
-w_status_t potentiometer_get_voltage(float *voltage);
+w_status_t potentiometer_get_voltage(float * voltage);
+
+w_status_t potentiometer_get_voltage_8_steps(uint8_t * voltage);
 
 #endif // POTENTIOMETER_H
