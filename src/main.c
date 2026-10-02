@@ -104,11 +104,7 @@ int main(void) {
 		// toggle the green led (connected to pin A3) on/off
 		// TODO: add a 500ms delay
 		HAL_Delay(500);
-
-
-
-
-
+		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_3);
 
 
 		// ------ end tutorial part 0.5 -----
@@ -125,7 +121,6 @@ int main(void) {
 		if (potentiometer_get_voltage(&pot_voltage) == W_SUCCESS) {
 			// TODO: ...
 		}
-
 		// Read the push button state (connected to pin A8)
 		GPIO_PinState button_state = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8);
 
