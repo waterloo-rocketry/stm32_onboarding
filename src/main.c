@@ -22,6 +22,7 @@
 #include "gpio.h"
 #include "i2c.h"
 #include "usart.h"
+#include <math.h>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -103,12 +104,8 @@ int main(void) {
 		// ------ tutorial part 0.5 ------
 		// toggle the green led (connected to pin A3) on/off
 		// TODO: add a 500ms delay
-		HAL_Delay(500);
-
-
-
-
-
+		// HAL_Delay(500);
+		// HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
 
 
 		// ------ end tutorial part 0.5 -----
@@ -124,12 +121,40 @@ int main(void) {
 		float pot_voltage;
 		if (potentiometer_get_voltage(&pot_voltage) == W_SUCCESS) {
 			// TODO: ...
-		}
+			unsigned int interval = (unsigned int) round((pot_voltage / 3.3f) * 8);
 
+			unsigned int bit0 = interval & 1;
+			unsigned int bit1 = interval & 10;
+			unsigned int bit2 = interval & 100;
+
+			if (bit0 == 1) {
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_SET);
+			} else {
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);
+			}
+			if (bit1 == 1) {
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
+			} else {
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
+			}
+			if (bit2 == 1) {
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
+			} else {
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+			}
+
+
+
+		}
 		// Read the push button state (connected to pin A8)
 		GPIO_PinState button_state = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8);
 
 		// TODO: have the LED turn on when the butten is pressed and turn it off when released
+		if (button_state == GPIO_PIN_SET){
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
+		} else {
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
+		}
 
 		// ----- end tutorial part 1 -----
 
