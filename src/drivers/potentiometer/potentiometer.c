@@ -4,9 +4,9 @@
 
 
 // TODO: find the correct values for this adc
-static const float ADC_MAX_VOLTAGE = 0x00; 
+static const float ADC_MAX_VOLTAGE = 3.3f;
 
-static const uint32_t ADC_MAX_COUNTS = 0x00;
+static const uint32_t ADC_MAX_COUNTS = 0xFFF;
 
 extern ADC_HandleTypeDef hadc1;
 
