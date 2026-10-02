@@ -135,7 +135,10 @@ int main(void) {
 		// Read the voltage at the potentiometer
 		float pot_voltage;
 		if (potentiometer_get_voltage(&pot_voltage) == W_SUCCESS) {
-			// TODO: ...
+			int level = pot_voltage * 8 / 3.3;
+			HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, (level >> 2) & 1);  
+			HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, (level >> 1) & 1);
+			HAL_GPIO_WritePin(LED_BLUE_GPIO_Port, LED_BLUE_Pin , (level >> 0) & 1);
 		}
 
 		// Read the push button state (connected to pin A8)
