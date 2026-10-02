@@ -48,7 +48,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+volatile float temperature_c = 0.0f;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -68,6 +68,7 @@ void SystemClock_Config(void);
  */
 int main(void) {
 	/* USER CODE BEGIN 1 */
+
 
 	/* USER CODE END 1 */
 
@@ -95,6 +96,9 @@ int main(void) {
 	/* USER CODE BEGIN 2 */
 	tmp1075_init();
 	potentiometer_init();
+
+
+
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -103,9 +107,10 @@ int main(void) {
 		// ------ tutorial part 0.5 ------
 		// toggle the green led (connected to pin A3) on/off
 		// TODO: add a 500ms delay
-		HAL_Delay(500);
-
-
+		//HAL_Delay(500);
+		HAL_Delay(10);
+		
+		//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
 
 
 
@@ -115,20 +120,48 @@ int main(void) {
 
 		// ------ tutorial part 1 ------
 		// Read the temperature from the TMP1075 sensor
-		float temperature_c;
-		if (tmp1075_get_temperature(&temperature_c) == W_SUCCESS) {
+		//float temperature_c;
+		/*if (tmp1075_get_temperature(&temperature_c) == W_SUCCESS) {
 			// TODO: ...
-		}
+
+
+		}*/
 
 		// Read the voltage at the potentiometer
-		float pot_voltage;
-		if (potentiometer_get_voltage(&pot_voltage) == W_SUCCESS) {
+		//float pot_voltage;
+	if (potentiometer_get_voltage(&pot_voltage) == W_SUCCESS) {
 			// TODO: ...
+			
+			int step = pot_voltage / 3.3f * 8;
+
+			if (step > 7) {
+				step = 7;
+			}
+
+			/*if (step & 0b100){ // if (step > 4)
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_SET);
+			} else {
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);
+			}*/
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2,
+				(step & 0b100) ? GPIO_PIN_SET : GPIO_PIN_RESET);
+
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3,
+				(step & 0b010) ? GPIO_PIN_SET : GPIO_PIN_RESET);
+
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4,
+				(step & 0b001) ? GPIO_PIN_SET : GPIO_PIN_RESET);
+
 		}
 
 		// Read the push button state (connected to pin A8)
 		GPIO_PinState button_state = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8);
 
+		if (button_state == GPIO_PIN_RESET) {
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_SET);
+		} else {
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);
+		}
 		// TODO: have the LED turn on when the butten is pressed and turn it off when released
 
 		// ----- end tutorial part 1 -----
