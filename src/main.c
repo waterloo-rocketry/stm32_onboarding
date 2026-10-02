@@ -66,6 +66,7 @@ void SystemClock_Config(void);
  * @brief  The application entry point.
  * @retval int
  */
+TIM_HandleTypeDef htim1;
 int main(void) {
 	/* USER CODE BEGIN 1 */
 
@@ -84,13 +85,14 @@ int main(void) {
 	SystemClock_Config();
 
 	/* USER CODE BEGIN SysInit */
-
+	
 	/* USER CODE END SysInit */
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
 	MX_ADC1_Init();
 	MX_I2C1_Init();
+	/*MX_TIM1_Init();*/
 	MX_USART1_UART_Init();
 	/* USER CODE BEGIN 2 */
 	tmp1075_init();
@@ -99,35 +101,128 @@ int main(void) {
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
+
+	// pwm stuff, i couldn't get it to work
+	/* uint32_t period = __HAL_TIM_GET_AUTORELOAD(&htim1); */
+	/* HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);*/
 	while (1) {
 		// ------ tutorial part 0.5 ------
 		// toggle the green led (connected to pin A3) on/off
 		// TODO: add a 500ms delay 
 
+		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
+		HAL_Delay(500);
 
-
-
-
-
-
+		// more pwm stuff
+		/*
+		HAL_Delay(500);
+		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 100);
+		HAL_Delay(500);
+		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 500);
+		*/
 
 		// ------ end tutorial part 0.5 -----
 
 		// ------ tutorial part 1 ------
 		// Read the temperature from the TMP1075 sensor
-		// float temperature_c;
-		// if (tmp1075_get_temperature(&temperature_c) == W_SUCCESS) {
-		// 	// TODO: ...
-		// }
+		float temperature_c;
+		GPIO_PinState button_state = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8);
+		if (tmp1075_get_temperature(&temperature_c) == W_SUCCESS && button_state == GPIO_PIN_SET) {
+			// set breakpoint on the next line, if button is pressed temperature_c will show up in debug mode
+			HAL_Delay(1);
+		}
+		// Read the push button state (connected to pin A8)
 
 		// Read the voltage at the potentiometer
-		// float pot_voltage;
-		// if (potentiometer_get_voltage(&pot_voltage) == W_SUCCESS) {
-		// 	// TODO: ...
-		// }
+		/*
+		float pot_voltage;
+		if (potentiometer_get_voltage(&pot_voltage) == W_SUCCESS) {
+			int step = (int)(pot_voltage/0.45);
+			if (step == 0) {
+				if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_2) == GPIO_PIN_SET) {
+					HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
+				}
+				if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_3) == GPIO_PIN_SET) {
+					HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
+				}
+				if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4) == GPIO_PIN_SET) {
+					HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_4);
+				}
+			} else if (step == 1) {
+				if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_2) == GPIO_PIN_SET) {
+					HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
+				}
+				if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_3) == GPIO_PIN_SET) {
+					HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
+				}
+				if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4) == GPIO_PIN_RESET) {
+					HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_4);
+				}
+			} else if (step == 2) {
+				if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_2) == GPIO_PIN_SET) {
+					HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
+				}
+				if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_3) == GPIO_PIN_RESET) {
+					HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
+				}
+				if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4) == GPIO_PIN_SET) {
+					HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_4);
+				}
+			} else if (step == 3) {
+				if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_2) == GPIO_PIN_SET) {
+					HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
+				}
+				if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_3) == GPIO_PIN_RESET) {
+					HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
+				}
+				if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4) == GPIO_PIN_RESET) {
+					HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_4);
+				}
+			} else if (step == 4) {
+				if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_2) == GPIO_PIN_RESET) {
+					HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
+				}
+				if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_3) == GPIO_PIN_SET) {
+					HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
+				}
+				if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4) == GPIO_PIN_SET) {
+					HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_4);
+				}
+			} else if (step == 5) {
+				if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_2) == GPIO_PIN_RESET) {
+					HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
+				}
+				if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_3) == GPIO_PIN_SET) {
+					HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
+				}
+				if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4) == GPIO_PIN_RESET) {
+					HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_4);
+				}
+			} else if (step == 6) {
+				if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_2) == GPIO_PIN_RESET) {
+					HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
+				}
+				if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_3) == GPIO_PIN_RESET) {
+					HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
+				}
+				if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4) == GPIO_PIN_SET) {
+					HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_4);
+				}
+			} else if (step == 7) {
+				if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_2) == GPIO_PIN_RESET) {
+					HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
+				}
+				if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_3) == GPIO_PIN_RESET) {
+					HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
+				}
+				if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4) == GPIO_PIN_RESET) {
+					HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_4);
+				}
+			}
+			
+		}
+		*/
 
-		// Read the push button state (connected to pin A8)
-		// GPIO_PinState button_state = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8);
 
 		// ----- end tutorial part 1 -----
 
