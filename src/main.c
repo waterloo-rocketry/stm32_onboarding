@@ -102,15 +102,45 @@ int main(void) {
 	while (1) {
 		// ------ tutorial part 0.5 ------
 		// toggle the green led (connected to pin A3) on/off
-		// TODO: add a 500ms delay
+		// TODO: add a 500ms delay 
+
+		int t_PWM = 5;
+		float t_ON = 1;
+
+		while (t_ON > 0 ) {
+			HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
+			HAL_Delay(t_PWM*(1-t_ON));
+			HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
+			HAL_Delay(t_PWM*t_ON);
+			
+			t_ON -= 0.01;
+		}
+		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
 		HAL_Delay(500);
+		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
 
+		t_ON =0;
 
+		while (t_ON < 1 ) {
+			HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
+			HAL_Delay(t_PWM*(1-t_ON));
+			HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
+			HAL_Delay(t_PWM*t_ON);
+			
+			t_ON += 0.01;
+		}
 
+		// t_ON = 0;
 
+		// for (int i=0; i< DIM_TIME; i ++) {
+		// 	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
+		// 	HAL_Delay(t_PWM*t_ON);
+		// 	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
+		// 	HAL_Delay(t_PWM*(1-t_ON));
+		// 	t_ON += 0.01;
+		// }
 
-
-
+		// Fade In: Increase duty cycle from 0% to 100%
 		// ------ end tutorial part 0.5 -----
 
 		// ------ tutorial part 1 ------
