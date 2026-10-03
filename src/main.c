@@ -121,9 +121,32 @@ int main(void) {
 		}
 
 		// Read the voltage at the potentiometer
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
 		float pot_voltage;
+    const float intervalEight = 3.3/8;
+    uint16_t binaryNumber;
 		if (potentiometer_get_voltage(&pot_voltage) == W_SUCCESS) {
-			// TODO: ...
+			// 0, 0.45, 0.9, 1.35, 1.8, 2.25, 2.70, 3.15, 3.60
+      for (int i = 0; i < 8; i++) {
+        if (intervalEight * i <= pot_voltage && pot_voltage <= intervalEight * (i+1)) {
+          binaryNumber = i;
+          break;
+        }
+      }
+
+      if (binaryNumber % 2 == 1) {
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);
+      }
+      binaryNumber = binaryNumber >> 1;
+      if (binaryNumber % 2 == 1) {
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
+      }
+      binaryNumber = binaryNumber >> 1;
+      if (binaryNumber % 2 == 1) {
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+      }
 		}
 
 		// Read the push button state (connected to pin A8)
