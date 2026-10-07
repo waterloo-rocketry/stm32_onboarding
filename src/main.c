@@ -48,7 +48,10 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+extern TIM_HandleTypeDef htim1;
 
+// Variable to store brightness duty cycle steps
+uint16_t brightness = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -66,7 +69,8 @@ void SystemClock_Config(void);
  * @brief  The application entry point.
  * @retval int
  */
-int main(void) {
+int main(void)
+{
 	/* USER CODE BEGIN 1 */
 
 	/* USER CODE END 1 */
@@ -95,34 +99,34 @@ int main(void) {
 	/* USER CODE BEGIN 2 */
 	tmp1075_init();
 	potentiometer_init();
+	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	while (1) {
+	while (1)
+	{
 		// ------ tutorial part 0.5 ------
 		// toggle the green led (connected to pin A3) on/off
 		// TODO: add a 500ms delay
-		HAL_Delay(500);
-
-
-
-
-
-
+		// HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
+		// HAL_Delay(100);
+		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 100);
 
 		// ------ end tutorial part 0.5 -----
 
 		// ------ tutorial part 1 ------
 		// Read the temperature from the TMP1075 sensor
 		float temperature_c;
-		if (tmp1075_get_temperature(&temperature_c) == W_SUCCESS) {
+		if (tmp1075_get_temperature(&temperature_c) == W_SUCCESS)
+		{
 			// TODO: ...
 		}
 
 		// Read the voltage at the potentiometer
 		float pot_voltage;
-		if (potentiometer_get_voltage(&pot_voltage) == W_SUCCESS) {
+		if (potentiometer_get_voltage(&pot_voltage) == W_SUCCESS)
+		{
 			// TODO: ...
 		}
 
@@ -144,7 +148,8 @@ int main(void) {
  * @brief System Clock Configuration
  * @retval None
  */
-void SystemClock_Config(void) {
+void SystemClock_Config(void)
+{
 	RCC_OscInitTypeDef RCC_OscInitStruct = {0};
 	RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
@@ -157,7 +162,8 @@ void SystemClock_Config(void) {
 	RCC_OscInitStruct.HSIState = RCC_HSI_ON;
 	RCC_OscInitStruct.HSIDiv = RCC_HSI_DIV4;
 	RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
+	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+	{
 		Error_Handler();
 	}
 
@@ -169,7 +175,8 @@ void SystemClock_Config(void) {
 	RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV1;
 	RCC_ClkInitStruct.APB1CLKDivider = RCC_APB1_DIV1;
 
-	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK) {
+	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+	{
 		Error_Handler();
 	}
 }
@@ -186,11 +193,13 @@ void SystemClock_Config(void) {
  * @param  htim : TIM handle
  * @retval None
  */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
 	/* USER CODE BEGIN Callback 0 */
 
 	/* USER CODE END Callback 0 */
-	if (htim->Instance == TIM1) {
+	if (htim->Instance == TIM1)
+	{
 		HAL_IncTick();
 	}
 	/* USER CODE BEGIN Callback 1 */
@@ -202,11 +211,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
  * @brief  This function is executed in case of error occurrence.
  * @retval None
  */
-void Error_Handler(void) {
+void Error_Handler(void)
+{
 	/* USER CODE BEGIN Error_Handler_Debug */
 	/* User can add his own implementation to report the HAL error return state */
 	__disable_irq();
-	while (1) {}
+	while (1)
+	{
+	}
 	/* USER CODE END Error_Handler_Debug */
 }
 #ifdef USE_FULL_ASSERT
@@ -217,7 +229,8 @@ void Error_Handler(void) {
  * @param  line: assert_param error line source number
  * @retval None
  */
-void assert_failed(uint8_t *file, uint32_t line) {
+void assert_failed(uint8_t *file, uint32_t line)
+{
 	/* USER CODE BEGIN 6 */
 	/* User can add his own implementation to report the file name and line number,
 	   ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
