@@ -73,7 +73,8 @@ int main(void) {
 
 	/* MCU Configuration--------------------------------------------------------*/
 
-	/* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+	/* Reset of all peripherals, Initializes the Flash interface and the Systick.
+	 */
 	HAL_Init();
 
 	/* USER CODE BEGIN Init */
@@ -95,6 +96,7 @@ int main(void) {
 	/* USER CODE BEGIN 2 */
 	tmp1075_init();
 	potentiometer_init();
+	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -102,14 +104,10 @@ int main(void) {
 	while (1) {
 		// ------ tutorial part 0.5 ------
 		// toggle the green led (connected to pin A3) on/off
+		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
 		// TODO: add a 500ms delay
-		HAL_Delay(500);
-
-
-
-
-
-
+		HAL_Delay(20);
+		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
 
 		// ------ end tutorial part 0.5 -----
 
@@ -129,7 +127,8 @@ int main(void) {
 		// Read the push button state (connected to pin A8)
 		GPIO_PinState button_state = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8);
 
-		// TODO: have the LED turn on when the butten is pressed and turn it off when released
+		// TODO: have the LED turn on when the butten is pressed and turn it off
+		// when released
 
 		// ----- end tutorial part 1 -----
 
@@ -219,8 +218,9 @@ void Error_Handler(void) {
  */
 void assert_failed(uint8_t *file, uint32_t line) {
 	/* USER CODE BEGIN 6 */
-	/* User can add his own implementation to report the file name and line number,
-	   ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+	/* User can add his own implementation to report the file name and line
+	   number, ex: printf("Wrong parameters value: file %s on line %d\r\n", file,
+	   line) */
 	/* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */

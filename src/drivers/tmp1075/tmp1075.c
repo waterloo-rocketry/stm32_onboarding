@@ -4,7 +4,7 @@
 #include "stm32c0xx_hal.h"
 
 // Register map
-#define REG_TEMP 0xFF // TODO: find the correct address
+#define REG_TEMP 0xff // TODO: find the correct address
 #define REG_CONFIG 0x01U
 #define REG_T_LOW 0x02U
 #define REG_T_HIGH 0x03U
@@ -33,12 +33,9 @@ w_status_t tmp1075_get_temperature(float *temperature_c) {
 
 	// Read 2 bytes from the temperature register
 	if (HAL_I2C_Mem_Read(&hi2c1,
-						 I2C_DEV_ADDR << 1U, // Shift 7-bit addr to be 8-bit for HAL
-						 REG_TEMP,
-						 I2C_MEMADD_SIZE_8BIT,
-						 raw_data,
-						 sizeof(raw_data),
-						 100U) != HAL_OK) {
+	                     I2C_DEV_ADDR << 1U, // Shift 7-bit addr to be 8-bit for HAL
+	                     REG_TEMP, I2C_MEMADD_SIZE_8BIT, raw_data, sizeof(raw_data),
+	                     100U) != HAL_OK) {
 		return W_FAILURE;
 	}
 
