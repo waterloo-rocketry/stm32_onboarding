@@ -85,13 +85,13 @@
 
 /************************* Miscellaneous Configuration ************************/
 /*!< Uncomment the following line if you need to relocate your vector Table in
-	 Internal SRAM. */
+     Internal SRAM. */
 // #define VECT_TAB_SRAM
 #if !defined(VECT_TAB_OFFSET)
 
 #define VECT_TAB_OFFSET                                                                            \
 	0x0U /*!< Vector Table base offset field.                                                      \
-			  This value must be a multiple of 0x100. */
+	          This value must be a multiple of 0x100. */
 
 #endif /* VECT_TAB_OFFSET */
 /******************************************************************************/
@@ -111,17 +111,17 @@
  * @{
  */
 /* The SystemCoreClock variable is updated in three ways:
-	1) by calling CMSIS function SystemCoreClockUpdate()
-	2) by calling HAL API function HAL_RCC_GetHCLKFreq()
-	3) each time HAL_RCC_ClockConfig() is called to configure the system clock frequency
-	   Note: If you use this function to configure the system clock; then there
-			 is no need to call the 2 first functions listed above, since SystemCoreClock
-			 variable is updated automatically.
+    1) by calling CMSIS function SystemCoreClockUpdate()
+    2) by calling HAL API function HAL_RCC_GetHCLKFreq()
+    3) each time HAL_RCC_ClockConfig() is called to configure the system clock frequency
+       Note: If you use this function to configure the system clock; then there
+             is no need to call the 2 first functions listed above, since SystemCoreClock
+             variable is updated automatically.
 */
 uint32_t SystemCoreClock = 12000000UL;
 
-const uint32_t AHBPrescTable[16UL] = {
-	0UL, 0UL, 0UL, 0UL, 0UL, 0UL, 0UL, 0UL, 1UL, 2UL, 3UL, 4UL, 6UL, 7UL, 8UL, 9UL};
+const uint32_t AHBPrescTable[16UL] = {0UL, 0UL, 0UL, 0UL, 0UL, 0UL, 0UL, 0UL,
+                                      1UL, 2UL, 3UL, 4UL, 6UL, 7UL, 8UL, 9UL};
 const uint32_t APBPrescTable[8UL] = {0UL, 0UL, 0UL, 0UL, 1UL, 2UL, 3UL, 4UL};
 
 /**
