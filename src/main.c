@@ -104,9 +104,11 @@ int main(void) {
 	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
 	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_4);
 
+/*
 	// bitbang consts
 	int brightness = 0;
 	int direction = 1;
+*/
 
 	while (1) {
 		// ------ tutorial part 0.5 ------
@@ -118,6 +120,7 @@ int main(void) {
 		HAL_Delay(500);
 */
 
+/*
 		// bitbanged dimming!
 		for (int stage = 0; stage < 10; stage++) {
 			for (int phase = 0; phase < 10; phase++) {
@@ -135,25 +138,41 @@ int main(void) {
 		if (brightness == 10 || brightness == 0) {
 			direction = -direction;
 		}
-    
+*/
 
 		// ------ end tutorial part 0.5 -----
 
 		// ------ tutorial part 1 ------
-		// Read the temperature from the TMP1075 sensor
-		float temperature_c;
-		if (tmp1075_get_temperature(&temperature_c) == W_SUCCESS) {
-			// TODO: ...
+
+		GPIO_PinState button_state = HAL_GPIO_ReadPin(SW1_GPIO_Port, SW1_Pin);
+
+		// when the button is pushed
+		if (button_state == GPIO_PIN_SET) {
+			float temperature_c;
+
+			// Read the temperature from the TMP1075 sensor
+			if (tmp1075_get_temperature(&temperature_c) == W_SUCCESS) {
+				// breakpoint!
+				HAL_Delay(10U);
+			}
 		}
+
 
 		// Read the voltage at the potentiometer
 		float pot_voltage;
 		if (potentiometer_get_voltage(&pot_voltage) == W_SUCCESS) {
-			// TODO: ...
+			uint32_t level = (uint32_t)(pot_voltage * 8.0f / 3.3f);
+
+			// pin 2 / pos 0
+			HAL_GPIO_WritePin(GPIOA, LED_BLUE_Pin, (level & 1U) ? GPIO_PIN_RESET : GPIO_PIN_SET);
+			// pin 3 / pos 1
+			HAL_GPIO_WritePin(GPIOA, LED_GREEN_Pin, (level & 2U) ? GPIO_PIN_RESET : GPIO_PIN_SET);
+			// pin 4 / pos 2
+			HAL_GPIO_WritePin(GPIOA, LED_RED_Pin, (level & 4U) ? GPIO_PIN_RESET : GPIO_PIN_SET);
 		}
 
 		// Read the push button state (connected to pin A8)
-		GPIO_PinState button_state = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8);
+		// GPIO_PinState button_state = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8);
 
 		// TODO: have the LED turn on when the butten is pressed and turn it off when released
 
