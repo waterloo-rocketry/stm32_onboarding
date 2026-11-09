@@ -27,7 +27,7 @@
 /* USER CODE BEGIN Includes */
 #include "drivers/potentiometer/potentiometer.h"
 #include "drivers/tmp1075/tmp1075.h"
-#include "rocketlib/include/common.h"
+#include "rocketlib/common/common.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -99,17 +99,43 @@ int main(void) {
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
+	
+	// turn off blue and red leds
+	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
+	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_4);
+
+	// bitbang consts
+	int brightness = 0;
+	int direction = 1;
+
 	while (1) {
 		// ------ tutorial part 0.5 ------
+		// normal flickering!
+/*
 		// toggle the green led (connected to pin A3) on/off
+		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
 		// TODO: add a 500ms delay
 		HAL_Delay(500);
+*/
 
+		// bitbanged dimming!
+		for (int stage = 0; stage < 10; stage++) {
+			for (int phase = 0; phase < 10; phase++) {
+				HAL_GPIO_WritePin(
+					LED_GREEN_GPIO_Port,
+					LED_GREEN_Pin,
+					phase < brightness ? GPIO_PIN_SET : GPIO_PIN_RESET
+				);
+				HAL_Delay(1U);
+			}
+		}
 
+		brightness += direction;
 
-
-
-
+		if (brightness == 10 || brightness == 0) {
+			direction = -direction;
+		}
+    
 
 		// ------ end tutorial part 0.5 -----
 

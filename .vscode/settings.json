@@ -4,5 +4,8 @@
         "freertos.h": "c",
         "semphr.h": "c",
         "init.h": "c"
+    },
+    "files.watcherExclude": {
+        "**/target/**": true
     }
 }

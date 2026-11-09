@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#include "rocketlib/include/common.h"
+#include "rocketlib/common/common.h"
 
 w_status_t potentiometer_init(void);
 

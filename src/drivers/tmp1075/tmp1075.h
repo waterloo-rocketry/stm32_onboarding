@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#include "rocketlib/include/common.h"
+#include "rocketlib/common/common.h"
 
 w_status_t tmp1075_init(void);
 
