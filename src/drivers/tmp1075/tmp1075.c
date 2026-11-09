@@ -10,7 +10,7 @@
 #define REG_T_HIGH 0x03U
 
 // The pins are set to A2=0, A1=0, A0=0
-static const uint16_t I2C_DEV_ADDR = 0b1001000U; // TODO: find the correct I2C address
+static const uint16_t I2C_DEV_ADDR = 0x48U; // TODO: find the correct I2C address
 
 // TODO: find the correct conversion factor for temperture
 static const float CELSIUS_PER_LSB =  0.0625f;
